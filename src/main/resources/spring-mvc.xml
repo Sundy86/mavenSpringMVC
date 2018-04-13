@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <bean id="user" class="com.sc.test.User">
+        <property name="name" value="sundy"></property>
+        <property name="age" value="99"></property>
+    </bean>
+    <!-- 扫描指定包带@Controller注解的类-->
+    <context:component-scan base-package="com.sc.controller">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+    </context:component-scan>
+
+    <bean id="car" class="com.sc.bean.Car">
+        <property name="name" value="北京现代"></property>
+        <property name="price" value="550000"></property>
+    </bean>
+    <bean id="users" class="com.sc.bean.User">
+        <property name="name" value="sc"></property>
+        <property name="age" value="19"></property>
+        <property name="carmap">
+            <map>
+               <entry key="name" value="一汽大众"></entry><!--分别录入对象属性-->
+               <entry key="price" value="500000"></entry>
+               <entry key="car2" value-ref="car"></entry>  <!--直接引入已有对象-->
+               <entry key="car3"> <!--将属性封装到指定对象-->
+                    <bean class="com.sc.bean.Car">
+                        <property name="name" value="宝马"></property>
+                        <property name="price" value="1000000"></property>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="people" class="com.sc.bean.People">
+        <constructor-arg index="0" value="ssss"/>
+        <constructor-arg index="1" value="23"/>
+        <constructor-arg index="2" ref="car"/>
+    </bean>
+
+    <bean id="people1" class="com.sc.bean.People" p:name="aaaa" p:age="15" p:car-ref="car"/>
+
+</beans>
+
+
